@@ -14,8 +14,10 @@ function App() {
         <Link to="/protected">Protected Page</Link>
       </nav>
       <div className="App">
-        <PrivateRoute exact path="/protected" component={BubblePage} />
-        <Route exact path="/" component={Login} />
+        <Switch>
+          <PrivateRoute exact path="/protected" component={BubblePage} />
+          <Route exact path="/" component={Login} />
+        </Switch>
       </div>
     </Router>
   );
