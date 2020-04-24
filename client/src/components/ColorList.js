@@ -12,6 +12,7 @@ const ColorList = ({ colors, updateColors }) => {
   // console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
+  const [newColor, setNewColor] = useState(initialColor);
   const { push } = useHistory();
 
   const editColor = (color) => {
@@ -44,6 +45,18 @@ const ColorList = ({ colors, updateColors }) => {
       })
       .catch((err) => console.log("error deleting color", err));
   };
+
+  const changeHandler = (e) => {
+    e.preventDefault();
+    setNewColor({
+      ...newColor,
+      [e.target.name]: e.target.value,
+      ...newColor.code,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const addColor = (e) => {};
 
   return (
     <div className="colors-wrap">
@@ -102,6 +115,15 @@ const ColorList = ({ colors, updateColors }) => {
       )}
       <div className="spacer" />
       {/* stretch - build another form here to add a color */}
+      <form>
+        <label>Color name: </label>
+        <input type="text" name="color" value={changeHandler} />
+
+        <label>Hex Code: </label>
+        <input type="text" name="hex" value={changeHandler} />
+
+        <button>add color</button>
+      </form>
     </div>
   );
 };
