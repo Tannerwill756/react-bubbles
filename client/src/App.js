@@ -9,11 +9,11 @@ import "./styles.scss";
 function App() {
   return (
     <Router>
-      <nav>
-        <Link to="/">Login Page</Link>
-        <Link to="/protected">Protected Page</Link>
-      </nav>
       <div className="App">
+        <nav>
+          <Link to="/">Login Page</Link>
+          <Link to="/protected">Protected Page</Link>
+        </nav>
         <Switch>
           <PrivateRoute exact path="/protected" component={BubblePage} />
           <Route exact path="/" component={Login} />
