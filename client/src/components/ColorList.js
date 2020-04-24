@@ -12,12 +12,16 @@ const ColorList = ({ colors, updateColors }) => {
   // console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
-  const [newColor, setNewColor] = useState(initialColor);
+  // const [newColor, setNewColor] = useState(initialColor);
   const { push } = useHistory();
 
   const editColor = (color) => {
     setEditing(true);
     setColorToEdit(color);
+  };
+
+  const refreshPage = () => {
+    window.location.reload(false);
   };
 
   const saveEdit = (e) => {
@@ -29,7 +33,7 @@ const ColorList = ({ colors, updateColors }) => {
       .put(`/api/colors/${colorToEdit.id}`, colorToEdit)
       .then((res) => {
         // console.log("put request for color", res);
-        // updateColors();
+        refreshPage();
         setEditing(false);
         push("/protected");
       })
@@ -41,22 +45,29 @@ const ColorList = ({ colors, updateColors }) => {
     axiosWithAuth()
       .delete(`/api/colors/${color.id}`)
       .then((res) => {
-        // updateColors();
+        refreshPage();
       })
       .catch((err) => console.log("error deleting color", err));
   };
 
-  const changeHandler = (e) => {
-    e.preventDefault();
-    setNewColor({
-      ...newColor,
-      [e.target.name]: e.target.value,
-      ...newColor.code,
-      [e.target.name]: e.target.value,
-    });
-  };
+  // const handleColorChange = (e) => {
+  //   setNewColor({
+  //     ...newColor,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
+  // const handleHexChange = (e) => {
+  //   setNewColor({
+  //     ...newColor,
+  //     code: { hex: e.target.value },
+  //   });
+  // };
 
-  const addColor = (e) => {};
+  // const addColor = (e) => {
+  //   axiosWithAuth()
+  //     .post("/api/colors", newColor)
+  //     .then((res) => console.log(res));
+  // };
 
   return (
     <div className="colors-wrap">
@@ -115,15 +126,16 @@ const ColorList = ({ colors, updateColors }) => {
       )}
       <div className="spacer" />
       {/* stretch - build another form here to add a color */}
-      <form>
+
+      {/* <form onSubmit={addColor}>
         <label>Color name: </label>
-        <input type="text" name="color" value={changeHandler} />
+        <input type="text" name="color" value={handleColorChange} />
 
         <label>Hex Code: </label>
-        <input type="text" name="hex" value={changeHandler} />
+        <input type="text" name="hex" value={handleHexChange} />
 
         <button>add color</button>
-      </form>
+      </form> */}
     </div>
   );
 };
